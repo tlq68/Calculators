@@ -5,7 +5,7 @@ h1 {
     margin: auto;
     border: 2px solid purple;
     background-color: rgb(146, 14, 128);
-    max-width: 450px;
+    max-width: 400px;
 }
 
 .screen {
@@ -21,19 +21,21 @@ h1 {
 .touchpad {
     
     display: grid;
-    grid-template-columns: 100px 100px 100px 100px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
-    width: 100%;
-    margin: 0;
+    align-content: center;
+    text-align: center;
     border: 2px solid red;
 }
 
 button.touchpad-button {
-    margin: 5px;
-    width: 75px;
+    margin: 5px 3px;
+    width: 50px;
+    max-width: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-self: center;
     border-radius: 10%;
     
 }
@@ -54,5 +56,5 @@ button.touchpad-button {
 
 #button-0, #decimal-button {
     margin:5px;
-    width: 75px;
+    width: 50px;
 }
