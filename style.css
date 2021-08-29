@@ -34,13 +34,13 @@ h1 {
 
 }
 
-.top-number {
+#top-number {
     margin-top: 10px;
     width: 300px;
     text-align: end;
     overflow: hidden;
 }
-.bottom-number {
+#bottom-number {
     margin-bottom: -20px;
     width: 300px;
     text-align: end;
