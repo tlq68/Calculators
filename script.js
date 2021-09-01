@@ -22,7 +22,7 @@ document.addEventListener('keydown', function(event) {
             numToOperate2 += parseInt(event.key, 10);
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
-        } else if (!numToOperate1 || !operatorToOperate) {
+        } else if (!operatorToOperate && !numToOperate2) {
             numToOperate1 += parseInt(event.key, 10); 
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
@@ -39,6 +39,10 @@ document.addEventListener('keydown', function(event) {
         operate(numToOperate1, operatorToOperate, numToOperate2);  
    }
 
+   if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
+        operate(numToOperate1, operatorToOperate, numToOperate2);
+   }
+
    if (event.key == 'Escape') {
        clearAll();
    }
@@ -50,11 +54,9 @@ document.addEventListener('keydown', function(event) {
 
 const operate = (num1, operator, num2) => {
    
-    let output = topDisplay.textContent;
-    output = num1 + operator + num2;
     
-    if( operator == '+' && event.key == 'Enter') {
-        
+    if((event.key == 'Enter' || event.key == '+')) {
+        numToOperate1 += numToOperate2;
         bottomDisplay.textContent = add(num1, num2);
     }
     if( operator == '-' && event.key == 'Enter') {
@@ -128,8 +130,14 @@ const clearAll = () => {
 const backspace = () => {
     // if num1 slice num1, if operator and !num2 slice operator...
 
-    if (numToOperate1 && !operatorToOperate && !numToOperate2) {
+    if (typeof numToOperate1 == 'number') {
+        clearAll();
+        return;
+    }   else if (numToOperate1 && !operatorToOperate && !numToOperate2) {
+
+       console.log(numToOperate1) 
         numToOperate1 = numToOperate1.slice(0,-1);
+       
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         console.log(outputNum)
     } else if (numToOperate1 && operatorToOperate && !numToOperate2) {
@@ -142,6 +150,8 @@ const backspace = () => {
         console.log(numToOperate2);
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         console.log(outputNum)
+    } else {
+        return;
     }
     
     topDisplay.textContent = outputNum;
