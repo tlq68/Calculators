@@ -2,14 +2,17 @@ const topDisplay = document.querySelector('#top-number');
 const bottomDisplay = document.querySelector('#bottom-number');
 let topStr = '';
 
-let numToOperate1 = null;
+let numToOperate1 = '';
 let operatorToOperate = '';
-let numToOperate2 = null;
+let numToOperate2 = '';
+
+
 
 document.addEventListener('keydown', function(event) {
     const parseKey = parseInt(event.key, 10);
-    if (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') {
+    if (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/' && numToOperate1) {
         operatorToOperate = event.key;
+        console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
     }
 
     if (parseKey >= 0 && parseKey <= 9) {
@@ -19,11 +22,15 @@ document.addEventListener('keydown', function(event) {
 
        
         if (operatorToOperate && numToOperate1) {
-            numToOperate2 = event.key;
+            numToOperate2 += parseInt(event.key, 10);
+            topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             // console.log(numToOperate1)
             // console.log(numToOperate2)
-        } else if (!numToOperate1) {
-            numToOperate1 = event.key; 
+        } else if (!numToOperate1 || !operatorToOperate) {
+            
+            numToOperate1 += parseInt(event.key, 10); 
+
+            topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             // console.log(numToOperate1)
             // console.log(numToOperate2)
         }
@@ -100,9 +107,10 @@ const divide = (a,b) => {
 
 const clearAll = () => {
     if(event.key == 'Backspace') {
-        numToOperate1 = null;
+        numToOperate1 = '';
         operatorToOperate = '';
-        numToOperate2 = null;
+        numToOperate2 = '';
+        topDisplay.textContent = null; 
         bottomDisplay.textContent = null;
         console.log("Hurray!")
     }
