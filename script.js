@@ -5,6 +5,8 @@ let numToOperate1 = '';
 let operatorToOperate = '';
 let numToOperate2 = '';
 
+let outputNum = '';
+
 
 
 document.addEventListener('keydown', function(event) {
@@ -12,16 +14,18 @@ document.addEventListener('keydown', function(event) {
     if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
         operatorToOperate = event.key;
         console.log(numToOperate1)
-        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        topDisplay.textContent = `${numToOperate1}${operatorToOperate}${numToOperate2}`
     }
 
     if (parseKey >= 0 && parseKey <= 9) {
         if (operatorToOperate && numToOperate1) {
             numToOperate2 += parseInt(event.key, 10);
-            topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+            topDisplay.textContent = outputNum;
         } else if (!numToOperate1 || !operatorToOperate) {
             numToOperate1 += parseInt(event.key, 10); 
-            topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+            topDisplay.textContent = outputNum;
            
         }
         console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
@@ -35,8 +39,11 @@ document.addEventListener('keydown', function(event) {
         operate(numToOperate1, operatorToOperate, numToOperate2);  
    }
 
-   if (event.key == 'Backspace') {
+   if (event.key == 'Escape') {
        clearAll();
+   }
+   if (event.key == 'Backspace') {
+       backspace();
    }
     
 });
@@ -110,5 +117,19 @@ const clearAll = () => {
     topDisplay.textContent = null; 
     bottomDisplay.textContent = null;
     console.log("Hurray!");
+    
+}
+
+const backspace = () => {
+    // if num1 slice num1, if operator and !num2 slice operator...
+
+    if (numToOperate1 && !operatorToOperate && !numToOperate2) {
+        numToOperate1 = numToOperate1.slice(0,-1);
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        console.log(outputNum)
+    }
+
+    
+    topDisplay.textContent = outputNum;
     
 }
