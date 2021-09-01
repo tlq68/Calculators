@@ -69,6 +69,11 @@ const operate = (num1, operator, num2) => {
         
         bottomDisplay.textContent = divide(num1, num2);
     }
+
+    
+    operatorToOperate = '';
+    numToOperate2 = '';
+
 }
 
 
@@ -127,8 +132,17 @@ const backspace = () => {
         numToOperate1 = numToOperate1.slice(0,-1);
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         console.log(outputNum)
+    } else if (numToOperate1 && operatorToOperate && !numToOperate2) {
+        operatorToOperate = operatorToOperate.slice(0,-1);
+        console.log(operatorToOperate)
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        console.log(outputNum)
+    } else if (numToOperate2) {
+        numToOperate2 = numToOperate2.slice(0,-1);
+        console.log(numToOperate2);
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        console.log(outputNum)
     }
-
     
     topDisplay.textContent = outputNum;
     
