@@ -10,9 +10,10 @@ let numToOperate2 = '';
 
 document.addEventListener('keydown', function(event) {
     const parseKey = parseInt(event.key, 10);
-    if (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/' && numToOperate1) {
+    if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
         operatorToOperate = event.key;
-        console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
+        console.log(numToOperate1)
+        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     }
 
     if (parseKey >= 0 && parseKey <= 9) {
@@ -29,6 +30,7 @@ document.addEventListener('keydown', function(event) {
         } else if (!numToOperate1 || !operatorToOperate) {
             
             numToOperate1 += parseInt(event.key, 10); 
+            
 
             topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             // console.log(numToOperate1)
@@ -81,6 +83,8 @@ const operate = (num1, operator, num2) => {
         bottomDisplay.textContent = divide(num1, num2);
     }
 }
+
+
 
 const add = (a,b) => {
     let parsedA = parseInt(a, 10);
