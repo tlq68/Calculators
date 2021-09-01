@@ -29,10 +29,9 @@ document.addEventListener('keydown', function(event) {
         }
 
 
-        console.log(numToOperate1)
-            console.log(numToOperate2)
-            console.log(operatorToOperate)
+       
         operate(numToOperate1, operatorToOperate, numToOperate2);   
+        console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
 
         
         /* First, we need to be able to store an input into the first variable if both num1 and num2 are null. 
@@ -51,15 +50,12 @@ document.addEventListener('keydown', function(event) {
 const operate = (num1, operator, num2) => {
     clearAll();
 
-    console.log('Right before output' + num1 + operator + num2);
-
-    let one = num1;
-    let two = operator; 
-    let three = num2;
+    
 
     
+    
     let output = topDisplay.textContent;
-    output = one + two + three;
+    output = num1 + operator + num2;
     
     if( operator == '+') {
         
@@ -83,7 +79,6 @@ const add = (a,b) => {
     let parsedA = parseInt(a, 10);
     let parsedB = parseInt(b, 10);
 
-
     return parsedA + parsedB;
 }
 
@@ -105,9 +100,9 @@ const divide = (a,b) => {
 
 const clearAll = () => {
     if(event.key == 'Backspace') {
-        num1 = null;
-        operator = '';
-        num2 = null;
+        numToOperate1 = null;
+        operatorToOperate = '';
+        numToOperate2 = null;
         bottomDisplay.textContent = null;
         console.log("Hurray!")
     }
