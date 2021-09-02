@@ -34,12 +34,14 @@ document.addEventListener('keydown', function(event) {
        // console.log(parseFloat(numToOperate1).toExponential())
 
     }
-    
+    // Only allows decimal for first number if there is not one already.
     if ((!operatorToOperate && !numToOperate2) && /^[-.]?[1-9][0-9]*(.)?$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
         numToOperate1 += '.';
         console.log(numToOperate1)
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
+
+    // Only allows decimal for first number if there is not one already.    
     } else if (numToOperate2 && /^[-.]?[1-9][0-9]*(.)?$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
         numToOperate2 += '.';
         console.log(numToOperate1)
@@ -49,6 +51,11 @@ document.addEventListener('keydown', function(event) {
 
     if (event.key == 'Enter' && numToOperate2) {
         operate(numToOperate1, operatorToOperate, numToOperate2);  
+   } else if (event.key == 'Enter' && /^[0-9]+.$/.test(numToOperate1)) {
+       
+       numToOperate1 = Math.trunc(numToOperate1);
+       bottomDisplay.textContent = numToOperate1;
+       
    } 
     
    if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
