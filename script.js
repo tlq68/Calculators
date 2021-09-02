@@ -84,8 +84,8 @@ const operate = (num1, operator, num2) => {
 
 
 const add = (a,b) => {
-    let parsedA = parseInt(a, 10);
-    let parsedB = parseInt(b, 10);
+    let parsedA = parseFloat(a, 10);
+    let parsedB = parseFloat(b, 10);
 
     numToOperate1 = parsedA + parsedB;
     operatorToOperate = '+';
