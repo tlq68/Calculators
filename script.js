@@ -34,20 +34,23 @@ document.addEventListener('keydown', function(event) {
        // console.log(parseFloat(numToOperate1).toExponential())
 
     }
-
-    if (/^-?[1-9][0-9]*(.)?$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+    
+    if (/^[-.]?[1-9][0-9]*(.)?$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
         numToOperate1 += '.';
         console.log(numToOperate1)
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
     }
 
     if (event.key == 'Enter' && numToOperate2) {
         operate(numToOperate1, operatorToOperate, numToOperate2);  
+   } else if (event.key == 'Enter' && /^-?[1-9][0-9]*(.)$/.test(numToOperate1)){
+        bottomDisplay.textContent = numToOperate1;
    }
-
+    
    if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
         operate(numToOperate1, operatorToOperate, numToOperate2);
-   }
+   } 
 
    if (event.key == 'Escape') {
        clearAll();
