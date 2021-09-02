@@ -26,7 +26,10 @@ document.addEventListener('keydown', function(event) {
             numToOperate1 += parseInt(event.key, 10); 
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
-           
+        } else if (typeof numToOperate1 == 'number') {
+            numToOperate1 = event.key;
+            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+            topDisplay.textContent = outputNum;
         }
         console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
     }
@@ -56,7 +59,7 @@ const operate = (num1, operator, num2) => {
    
     
     if((event.key == 'Enter' || event.key == '+')) {
-        numToOperate1 += numToOperate2;
+        
         bottomDisplay.textContent = add(num1, num2);
     }
     if( operator == '-' && event.key == 'Enter') {
@@ -85,6 +88,7 @@ const add = (a,b) => {
     let parsedB = parseInt(b, 10);
 
     numToOperate1 = parsedA + parsedB;
+    operatorToOperate = '+';
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
 
