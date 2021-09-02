@@ -14,7 +14,7 @@ document.addEventListener('keydown', function(event) {
     if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
         operatorToOperate = event.key;
         console.log(numToOperate1)
-        topDisplay.textContent = `${numToOperate1}${operatorToOperate}${numToOperate2}`
+        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     }
 
     if (parseKey >= 0 && parseKey <= 9) {
@@ -38,7 +38,7 @@ document.addEventListener('keydown', function(event) {
         alert('Yep')
     }
 
-    if (event.key == 'Enter') {
+    if (event.key == 'Enter' && numToOperate2) {
         operate(numToOperate1, operatorToOperate, numToOperate2);  
    }
 
@@ -87,26 +87,26 @@ const add = (a,b) => {
     let parsedA = parseFloat(a, 10);
     let parsedB = parseFloat(b, 10);
 
-    numToOperate1 = ((parsedA + parsedB)/100)*100;
+    numToOperate1 = Math.round((parsedA + parsedB)*10000)/10000;
     operatorToOperate = '+';
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
 
-    return parsedA + parsedB;
+    return Math.round((parsedA + parsedB)*10000)/10000;
 }
 
 const subtract = (a,b) => {
-    numToOperate1 = a - b;
+    numToOperate1 = Math.round((a - b)*10000)/10000;
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
-    return a - b;
+    return Math.round((a - b)*10000)/10000;
 }
 
 const multiply = (a,b) => {
-    numToOperate1 = a * b;
+    numToOperate1 = Math.round((a * b)*10000)/10000;
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
-    return a * b;
+    return Math.round((a * b)*10000)/10000;
 }
 
 const divide = (a,b) => {
