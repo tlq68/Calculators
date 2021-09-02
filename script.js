@@ -22,7 +22,7 @@ document.addEventListener('keydown', function(event) {
             numToOperate2 += parseInt(event.key, 10);
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
-        } else if (!operatorToOperate && !numToOperate2) {
+        } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
             numToOperate1 += parseInt(event.key, 10); 
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
