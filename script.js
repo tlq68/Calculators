@@ -87,7 +87,7 @@ const add = (a,b) => {
     let parsedA = parseFloat(a, 10);
     let parsedB = parseFloat(b, 10);
 
-    numToOperate1 = parsedA + parsedB;
+    numToOperate1 = ((parsedA + parsedB)/100)*100;
     operatorToOperate = '+';
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
@@ -111,10 +111,10 @@ const multiply = (a,b) => {
 
 const divide = (a,b) => {
     if (b != 0) {
-        numToOperate1 = a / b;
+        numToOperate1 = Math.round((a / b)*10000)/10000;
         numToOperate2 = '';
         topDisplay.textContent = numToOperate1;
-       return a / b;
+       return Math.round((a / b)*10000)/10000;
     } else { 
         return 'Don\'t be silly!';
     }
