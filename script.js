@@ -31,11 +31,14 @@ document.addEventListener('keydown', function(event) {
             outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
             topDisplay.textContent = outputNum;
         }
-        console.log(`${numToOperate1} ${operatorToOperate} ${numToOperate2}`)
+       // console.log(parseFloat(numToOperate1).toExponential())
+
     }
-    
-    if (event.key == '.' || event.key == ',') {
-        alert('Yep')
+
+    if (/^-?[1-9][0-9]*(.)?$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+        numToOperate1 += '.';
+        console.log(numToOperate1)
+        topDisplay.textContent = outputNum;
     }
 
     if (event.key == 'Enter' && numToOperate2) {
@@ -52,8 +55,22 @@ document.addEventListener('keydown', function(event) {
    if (event.key == 'Backspace') {
        backspace();
    }
+
+
+    if (outputNum.length >= 18) {
+        parseFloat(numToOperate1).toExponential();
+        bottomDisplay.style.fontSize = '.7em'
+        bottomDisplay.style.color = 'blue'
+    } else if (outputNum.length >= 16) {
+        bottomDisplay.style.color = 'red'
+        bottomDisplay.style.fontSize = '.8em'
+    }
     
 });
+
+if (outputNum.length >= 10) {
+    bottomDisplay.style.color = 'red'
+}
 
 const operate = (num1, operator, num2) => {
    
