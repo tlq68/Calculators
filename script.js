@@ -7,7 +7,10 @@ let numToOperate2 = '';
 
 let outputNum = '';
 
-
+const displayOutputNum = () => {
+    outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+    topDisplay.textContent = outputNum;  
+}
 
 document.addEventListener('keydown', function(event) {
     const parseKey = parseInt(event.key, 10);
@@ -17,19 +20,21 @@ document.addEventListener('keydown', function(event) {
         topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     }
 
+
+
     if (parseKey >= 0 && parseKey <= 9) {
-        if (operatorToOperate && numToOperate1) {
+        if (/^0(?!\.)/.test(numToOperate1) || /^0(?!\.)/.test(numToOperate2)) {
+            return;
+        }
+        else if (operatorToOperate && numToOperate1) {
             numToOperate2 += parseInt(event.key, 10);
-            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-            topDisplay.textContent = outputNum;
+            displayOutputNum();
         } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
             numToOperate1 += parseInt(event.key, 10); 
-            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-            topDisplay.textContent = outputNum;
+            displayOutputNum();
         } else if (typeof numToOperate1 == 'number') {
             numToOperate1 = event.key;
-            outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-            topDisplay.textContent = outputNum;
+            displayOutputNum();
         }
        // console.log(parseFloat(numToOperate1).toExponential())
 
@@ -38,25 +43,21 @@ document.addEventListener('keydown', function(event) {
     if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
         numToOperate1 += '.';
         console.log(numToOperate1)
-        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        topDisplay.textContent = outputNum;
+        displayOutputNum();
 
     // Only allows decimal for first number if there is not one already.    
     } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
         numToOperate2 += '.';
         console.log(numToOperate1)
-        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        topDisplay.textContent = outputNum;
+        displayOutputNum();
     }
 
     if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
         numToOperate1 = '0.';
-        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        topDisplay.textContent = outputNum;
+        displayOutputNum();
     } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
         numToOperate2 = '0.';
-        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        topDisplay.textContent = outputNum;
+        displayOutputNum();
     }
     if (outputNum.length >= 18) {
       
@@ -101,26 +102,24 @@ document.addEventListener('keydown', function(event) {
     
 });
 
-if (outputNum.length >= 10) {
-    bottomDisplay.style.color = 'red'
-}
+
 
 const operate = (num1, operator, num2) => {
    
-    
+    // Need to make a change where pressing an operator will complete the loaded operation and not do whatever operation matches the pressed button.
     if((event.key == 'Enter' || event.key == '+')) {
         
         bottomDisplay.textContent = add(num1, num2);
     }
-    if( operator == '-' && event.key == 'Enter') {
+    if((event.key == 'Enter' || event.key == '-')) {
         
         bottomDisplay.textContent = subtract(num1, num2);
     }
-    if( operator == '*' && event.key == 'Enter') {
+    if((event.key == 'Enter' || event.key == '*')) {
         
         bottomDisplay.textContent = multiply(num1, num2);
     }
-    if( operator == '/' && event.key == 'Enter') {
+    if((event.key == 'Enter' || event.key == '/')) {
         
         bottomDisplay.textContent = divide(num1, num2);
     }
@@ -147,6 +146,7 @@ const add = (a,b) => {
 
 const subtract = (a,b) => {
     numToOperate1 = Math.round((a - b)*10000)/10000;
+    operatorToOperate = '-';
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
     return Math.round((a - b)*10000)/10000;
@@ -154,6 +154,7 @@ const subtract = (a,b) => {
 
 const multiply = (a,b) => {
     numToOperate1 = Math.round((a * b)*10000)/10000;
+    operatorToOperate = '*';
     numToOperate2 = '';
     topDisplay.textContent = numToOperate1;
     return Math.round((a * b)*10000)/10000;
@@ -162,6 +163,7 @@ const multiply = (a,b) => {
 const divide = (a,b) => {
     if (b != 0) {
         numToOperate1 = Math.round((a / b)*10000)/10000;
+        operatorToOperate = '/';
         numToOperate2 = '';
         topDisplay.textContent = numToOperate1;
        return Math.round((a / b)*10000)/10000;
