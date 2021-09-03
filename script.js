@@ -35,19 +35,25 @@ document.addEventListener('keydown', function(event) {
 
     }
     // Only allows decimal for first number if there is not one already.
-    if ((!operatorToOperate && !numToOperate2) && /^[-.]?[1-9][0-9]*(.)?$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+    if ((!operatorToOperate && !numToOperate2) && /^([-]?[1-9][0-9]*(.)?|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
         numToOperate1 += '.';
         console.log(numToOperate1)
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
 
     // Only allows decimal for first number if there is not one already.    
-    } else if (numToOperate2 && /^[-.]?[1-9][0-9]*(.)?$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
+    } else if (numToOperate2 && /^([-]?[1-9][0-9]*.?|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
         numToOperate2 += '.';
         console.log(numToOperate1)
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
     }
+    if (outputNum.length >= 18) {
+      
+        topDisplay.textContent = parseFloat(numToOperate1).toExponential();
+        bottomDisplay.style.fontSize = '.7em'
+        bottomDisplay.style.color = 'blue'
+    } 
 
     if (event.key == 'Enter' && numToOperate2) {
         numToOperate1 = numToOperate1;
@@ -74,14 +80,7 @@ document.addEventListener('keydown', function(event) {
    }
 
 
-    if (outputNum.length >= 18) {
-        parseFloat(numToOperate1).toExponential();
-        bottomDisplay.style.fontSize = '.7em'
-        bottomDisplay.style.color = 'blue'
-    } else if (outputNum.length >= 16) {
-        bottomDisplay.style.color = 'red'
-        bottomDisplay.style.fontSize = '.8em'
-    }
+    
     
 });
 
@@ -172,24 +171,20 @@ const backspace = () => {
         clearAll();
         return;
     }   else if (numToOperate1 && !operatorToOperate && !numToOperate2) {
-
-       console.log(numToOperate1) 
         numToOperate1 = numToOperate1.slice(0,-1);
-       
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        console.log(outputNum)
     } else if (numToOperate1 && operatorToOperate && !numToOperate2) {
         operatorToOperate = operatorToOperate.slice(0,-1);
-        console.log(operatorToOperate)
+        
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        console.log(outputNum)
+        
     } else if (numToOperate2) {
         numToOperate2 = numToOperate2.slice(0,-1);
-        console.log(numToOperate2);
+        
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-        console.log(outputNum)
+        
     } else {
-        return;
+        clearAll();
     }
     
     topDisplay.textContent = outputNum;
