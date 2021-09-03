@@ -48,6 +48,16 @@ document.addEventListener('keydown', function(event) {
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
     }
+
+    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+        numToOperate1 = '0.';
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        topDisplay.textContent = outputNum;
+    } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+        numToOperate2 = '0.';
+        outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        topDisplay.textContent = outputNum;
+    }
     if (outputNum.length >= 18) {
       
         topDisplay.textContent = parseFloat(numToOperate1).toExponential();
