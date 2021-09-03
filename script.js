@@ -50,13 +50,17 @@ document.addEventListener('keydown', function(event) {
     }
 
     if (event.key == 'Enter' && numToOperate2) {
+        numToOperate1 = numToOperate1;
         operate(numToOperate1, operatorToOperate, numToOperate2);  
    } else if (event.key == 'Enter' && /^[0-9]+.$/.test(numToOperate1)) {
-       
        numToOperate1 = Math.trunc(numToOperate1);
        bottomDisplay.textContent = numToOperate1;
        
    } 
+
+   if (typeof numToOperate1 == 'number' && (operatorToOperate || numToOperate2)) {
+       numToOperate1 = numToOperate1.toString();
+   }
     
    if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
         operate(numToOperate1, operatorToOperate, numToOperate2);
@@ -162,7 +166,7 @@ const clearAll = () => {
 }
 
 const backspace = () => {
-    // if num1 slice num1, if operator and !num2 slice operator...
+    //if num1 slice num1, if operator and !num2 slice operator...
 
     if (typeof numToOperate1 == 'number') {
         clearAll();
