@@ -35,14 +35,14 @@ document.addEventListener('keydown', function(event) {
 
     }
     // Only allows decimal for first number if there is not one already.
-    if ((!operatorToOperate && !numToOperate2) && /^([-]?[1-9][0-9]*(.)?|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+    if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
         numToOperate1 += '.';
         console.log(numToOperate1)
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
         topDisplay.textContent = outputNum;
 
     // Only allows decimal for first number if there is not one already.    
-    } else if (numToOperate2 && /^([-]?[1-9][0-9]*.?|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
+    } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
         numToOperate2 += '.';
         console.log(numToOperate1)
         outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
