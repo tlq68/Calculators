@@ -65,14 +65,21 @@ document.addEventListener('keydown', function(event) {
         bottomDisplay.style.color = 'blue'
     } 
 
+
+    
     if (event.key == 'Enter' && numToOperate2) {
         numToOperate1 = numToOperate1;
         operate(numToOperate1, operatorToOperate, numToOperate2);  
-   } else if (event.key == 'Enter' && /^[0-9]+.$/.test(numToOperate1)) {
+   } else if (event.key == 'Enter' && /^[0-9]*.(?![0-9])$/.test(numToOperate1)) {
+    console.log('truess')
        numToOperate1 = Math.trunc(numToOperate1);
        bottomDisplay.textContent = numToOperate1;
        
-   } 
+   } else if (event.key == 'Enter' && numToOperate1) {
+        numToOperate1 = parseFloat(numToOperate1);
+         
+        bottomDisplay.textContent = numToOperate1;
+   }
 
    if (typeof numToOperate1 == 'number' && (operatorToOperate || numToOperate2)) {
        numToOperate1 = numToOperate1.toString();
