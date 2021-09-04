@@ -7,11 +7,14 @@ let numToOperate2 = '';
 
 let outputNum = '';
 
+
+// Start of keyListener section //
+
 const displayOutputNum = () => {
     outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     topDisplay.textContent = outputNum;  
 }
-const listenerFunction = () => {
+const keyListenerFunction = () => {
     document.addEventListener('keydown', function(event) {
         const parseKey = parseInt(event.key, 10);
     
@@ -85,13 +88,13 @@ const listenerFunction = () => {
            numToOperate1 = numToOperate1.toString();
         }
         
-       if (event.key == 'Escape') {
+        if (event.key == 'Escape') {
            clearAll();
-       }
+        }
 
-       if (event.key == 'Backspace') {
+        if (event.key == 'Backspace') {
            backspace();
-       }
+        }
     
         if (bottomDisplay.textContent.length >= 16) {
             bottomDisplay.style.fontSize = '.7em'
@@ -103,8 +106,11 @@ const listenerFunction = () => {
     });
 }
 
-listenerFunction(); 
+keyListenerFunction(); 
 
+// End of keyListener section //
+
+// Start of operations section //
 const operate = (num1, operator, num2) => {
     if (operatorToOperate == '+') {
         bottomDisplay.textContent = add(num1, num2);
@@ -201,3 +207,25 @@ const backspace = () => {
     }   
     
 }
+
+// End of operations section //
+
+// Start of HTML Buttons section //
+const inputButtons = document.querySelectorAll('button');
+
+
+const clickListenerFunction = () => {
+    
+    inputButtons.forEach(button => {
+        button.addEventListener('click', () => {
+        button.style.color = 'red'
+    })
+    }) 
+    
+   
+  
+}
+
+clickListenerFunction();
+
+// End of HTML Buttons section //
