@@ -219,9 +219,14 @@ const clickListenerFunction = () => {
     inputButtons.forEach(button => {
         button.addEventListener('click', () => {
         button.style.color = 'red'
+        
+        
     })
     }) 
-    
+    if (button.value == 'AllClear') {
+        clearAll();
+        console.log(button.value)
+    }
    
   
 }
