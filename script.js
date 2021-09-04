@@ -11,110 +11,113 @@ const displayOutputNum = () => {
     outputNum = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     topDisplay.textContent = outputNum;  
 }
-
-document.addEventListener('keydown', function(event) {
-    const parseKey = parseInt(event.key, 10);
-
-    if ((event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') && numToOperate2) {
-       
-        operate(numToOperate1, operatorToOperate, numToOperate2); 
+const listenerFunction = () => {
+    document.addEventListener('keydown', function(event) {
+        const parseKey = parseInt(event.key, 10);
+    
+        if ((event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') && numToOperate2) {
+           
+            operate(numToOperate1, operatorToOperate, numToOperate2); 
+            
+           }
+    
+        if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
+            operatorToOperate = event.key;
+            console.log(numToOperate1)
+            topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        }
+    
+    
+    
+        if (parseKey >= 0 && parseKey <= 9) {
+            if (/^0(?!\.)/.test(numToOperate1) || /^0(?!\.)/.test(numToOperate2)) {
+                return;
+            }
+            else if (operatorToOperate && numToOperate1) {
+                numToOperate2 += parseInt(event.key, 10);
+                displayOutputNum();
+            } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
+                numToOperate1 += parseInt(event.key, 10); 
+                displayOutputNum();
+            } else if (typeof numToOperate1 == 'number') {
+                numToOperate1 = event.key;
+                displayOutputNum();
+            }
+           // console.log(parseFloat(numToOperate1).toExponential())
+    
+        }
+        // Only allows decimal for first number if there is not one already.
+        if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+            numToOperate1 += '.';
+            console.log(numToOperate1)
+            displayOutputNum();
+    
+        // Only allows decimal for first number if there is not one already.    
+        } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
+            numToOperate2 += '.';
+            console.log(numToOperate1)
+            displayOutputNum();
+        }
+    
+        if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+            numToOperate1 = '0.';
+            displayOutputNum();
+        } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+            numToOperate2 = '0.';
+            displayOutputNum();
+        }
+        if (outputNum.length >= 18) {
+          
+            topDisplay.textContent = parseFloat(numToOperate1).toExponential();
+            bottomDisplay.style.fontSize = '.7em'
+            bottomDisplay.style.color = 'blue'
+        } 
+    
+    
         
+        if (event.key == 'Enter' && numToOperate2) {
+            numToOperate1 = numToOperate1;
+            operate(numToOperate1, operatorToOperate, numToOperate2);  
+       } else if (event.key == 'Enter' && /^[0-9]*.(?![0-9])$/.test(numToOperate1)) {
+        console.log('truess')
+           numToOperate1 = Math.trunc(numToOperate1);
+           bottomDisplay.textContent = numToOperate1;
+           
+       } else if (event.key == 'Enter' && numToOperate1) {
+            numToOperate1 = parseFloat(numToOperate1);
+             
+            bottomDisplay.textContent = numToOperate1;
        }
-
-    if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
-        operatorToOperate = event.key;
-        console.log(numToOperate1)
-        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-    }
-
-
-
-    if (parseKey >= 0 && parseKey <= 9) {
-        if (/^0(?!\.)/.test(numToOperate1) || /^0(?!\.)/.test(numToOperate2)) {
-            return;
-        }
-        else if (operatorToOperate && numToOperate1) {
-            numToOperate2 += parseInt(event.key, 10);
-            displayOutputNum();
-        } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
-            numToOperate1 += parseInt(event.key, 10); 
-            displayOutputNum();
-        } else if (typeof numToOperate1 == 'number') {
-            numToOperate1 = event.key;
-            displayOutputNum();
-        }
-       // console.log(parseFloat(numToOperate1).toExponential())
-
-    }
-    // Only allows decimal for first number if there is not one already.
-    if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
-        numToOperate1 += '.';
-        console.log(numToOperate1)
-        displayOutputNum();
-
-    // Only allows decimal for first number if there is not one already.    
-    } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
-        numToOperate2 += '.';
-        console.log(numToOperate1)
-        displayOutputNum();
-    }
-
-    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
-        numToOperate1 = '0.';
-        displayOutputNum();
-    } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
-        numToOperate2 = '0.';
-        displayOutputNum();
-    }
-    if (outputNum.length >= 18) {
-      
-        topDisplay.textContent = parseFloat(numToOperate1).toExponential();
-        bottomDisplay.style.fontSize = '.7em'
-        bottomDisplay.style.color = 'blue'
-    } 
-
-
     
-    if (event.key == 'Enter' && numToOperate2) {
-        numToOperate1 = numToOperate1;
-        operate(numToOperate1, operatorToOperate, numToOperate2);  
-   } else if (event.key == 'Enter' && /^[0-9]*.(?![0-9])$/.test(numToOperate1)) {
-    console.log('truess')
-       numToOperate1 = Math.trunc(numToOperate1);
-       bottomDisplay.textContent = numToOperate1;
        
-   } else if (event.key == 'Enter' && numToOperate1) {
-        numToOperate1 = parseFloat(numToOperate1);
-         
-        bottomDisplay.textContent = numToOperate1;
-   }
-
-   
-   
-   
-   
-   
-   if (typeof numToOperate1 == 'number' && (operatorToOperate || numToOperate2)) {
-       numToOperate1 = numToOperate1.toString();
-   }
+       
+       
+       
+       
+       if (typeof numToOperate1 == 'number' && (operatorToOperate || numToOperate2)) {
+           numToOperate1 = numToOperate1.toString();
+       }
+        
+    //    if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
+    //         operate(numToOperate1, operatorToOperate, numToOperate2);
+    //    } 
     
-//    if (numToOperate2 && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/')) {
-//         operate(numToOperate1, operatorToOperate, numToOperate2);
-//    } 
-
-   if (event.key == 'Escape') {
-       clearAll();
-   }
-   if (event.key == 'Backspace') {
-       backspace();
-   }
-
-
+       if (event.key == 'Escape') {
+           clearAll();
+       }
+       if (event.key == 'Backspace') {
+           backspace();
+       }
     
     
-});
+        
+        
+    });
+    
+    
+}
 
-
+listenerFunction(); 
 
 const operate = (num1, operator, num2) => {
    
