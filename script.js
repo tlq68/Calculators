@@ -25,10 +25,11 @@ const listenerFunction = () => {
         }
 
         if (parseKey >= 0 && parseKey <= 9) {
-            if (/^0(?!\.)/.test(numToOperate1) || /^0(?!\.)/.test(numToOperate2)) {
+            if (/^0(?!\.)/.test(numToOperate1) && !operatorToOperate) {
                 return;
-            }
-            else if (operatorToOperate && numToOperate1) {
+            } else if (/^0(?!\.)/.test(numToOperate2)) {
+                return;
+            } else if (operatorToOperate && numToOperate1) {
                 numToOperate2 += parseFloat(event.key, 10);
                 displayOutputNum();
             } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
@@ -38,13 +39,14 @@ const listenerFunction = () => {
                 numToOperate1 = event.key;
                 displayOutputNum();
             }
-                   }
+        }
+
         // Only allows decimal for first number variable if there is not one already.
         if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
             numToOperate1 += '.';
             displayOutputNum();
     
-        // Only allows decimal for first number variable if there is not one already.    
+        // Only allows decimal for second number variable if there is not one already.    
         } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
             numToOperate2 += '.';
             displayOutputNum();
@@ -158,12 +160,16 @@ const divide = (a,b) => {
 }
 
 const makeNegative = () => {
-    if (numToOperate1 && !numToOperate2) {
+    if (numToOperate1 == '0' || numToOperate1 == '0.') {
+        return; 
+    } else if (numToOperate1 && !numToOperate2) {
         numToOperate1 = numToOperate1 * -1;
+        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     } else if (numToOperate2) {
         numToOperate2 = numToOperate2 * -1;
-    }
-    topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+        topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
+    } 
+    
 }
 
 const clearAll = () => {
