@@ -8,26 +8,31 @@ let operatorToOperate = '';
 let numToOperate2 = '';
 
 let outputNum = '';
+let input = '';
 
 
 // Start of listeners //
 
 
 document.addEventListener('keydown', function(event) {
+
+    input = event.key;
     doOperations();
     numberInputs();
     makeDecimal();
     continuousOperations();
 
-    if ( event.key == 'Shift') {
+    
+
+    if (input == 'Shift') {
         makeNegative();
     }
 
-    if (event.key == 'Escape') {
+    if (input == 'Escape') {
         clearAll();
     }
 
-    if (event.key == 'Backspace') {
+    if (input == 'Backspace') {
         backspace();
     }
 
@@ -41,17 +46,30 @@ document.addEventListener('keydown', function(event) {
 
 const inputButtons = document.querySelectorAll('button');
 
+inputButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.style.color = 'red';
 
-    inputButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            button.style.color = 'red';
 
-            if (button.value == 'AllClear') {
-                clearAll();
-                console.log(button.value)
-            }
-        });
-    }); 
+        input = button.value;
+
+        doOperations();
+    numberInputs();
+    makeDecimal();
+    continuousOperations();
+
+        if (input == 'Negative') {
+            makeNegative();
+        }
+
+        if (input == 'AllClear') {
+            clearAll();
+        }
+        if (input == 'Clear') {
+            backspace();
+        }
+    });
+}); 
 
 
 // End of listeners //
@@ -64,18 +82,18 @@ const displayOutputNum = () => {
 }
 
 const doOperations = () => {
-    if ((event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') && numToOperate2) {
+    if ((input == '+' || input == '-' || input == '*' || input == '/') && numToOperate2) {
         operate(numToOperate1, operatorToOperate, numToOperate2); 
        }
 
-    if (numToOperate1 != '' && (event.key == '+' || event.key == '-' || event.key == '*' || event.key == '/') ) {
-        operatorToOperate = event.key;
+    if (numToOperate1 != '' && (input == '+' || input == '-' || input == '*' || input == '/') ) {
+        operatorToOperate = input;
         topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
     }
 }
 
 const numberInputs = () => {
-    const parseKey = parseInt(event.key, 10);
+    const parseKey = parseInt(input, 10);
 
     if (parseKey >= 0 && parseKey <= 9) {
         if (/^0(?!\.)/.test(numToOperate1) && !operatorToOperate) {
@@ -83,13 +101,13 @@ const numberInputs = () => {
         } else if (/^0(?!\.)/.test(numToOperate2)) {
             return;
         } else if (operatorToOperate && numToOperate1) {
-            numToOperate2 += parseFloat(event.key, 10);
+            numToOperate2 += parseFloat(input, 10);
             displayOutputNum();
         } else if (!operatorToOperate && !numToOperate2 && typeof numToOperate1 != 'number') {
-            numToOperate1 += parseFloat(event.key, 10); 
+            numToOperate1 += parseFloat(input, 10); 
             displayOutputNum();
         } else if (typeof numToOperate1 == 'number') {
-            numToOperate1 = event.key;
+            numToOperate1 = input;
             displayOutputNum();
         }
     }
@@ -97,23 +115,23 @@ const numberInputs = () => {
 
 const makeDecimal = () => {
     // Only allows decimal for first number variable if there is not one already.
-    if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (event.key == '.' || event.key == ','))  {
+    if ((!operatorToOperate && !numToOperate2) && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate1) && (input == '.' || input == ','))  {
         numToOperate1 += '.';
         displayOutputNum();
 
     // Only allows decimal for second number variable if there is not one already.    
-    } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (event.key == '.' || event.key == ',')) {
+    } else if (numToOperate2 && /^([1-9][0-9]*(?!.)|0)$/.test(numToOperate2) && (input == '.' || input == ',')) {
         numToOperate2 += '.';
         displayOutputNum();
     }
 
-    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (nput == '.' || input == ',')) {
         numToOperate1 = '0.';
         displayOutputNum();
-    } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (event.key == '.' || event.key == ',')) {
+    } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (input == '.' || input == ',')) {
         numToOperate2 = '0.';
         displayOutputNum();
-    } else if (typeof numToOperate1 == 'number' && (event.key == '.' || event.key == ',')) {
+    } else if (typeof numToOperate1 == 'number' && (input == '.' || input == ',')) {
         numToOperate1 = '0.';
         displayOutputNum();
     }
@@ -122,21 +140,21 @@ const makeDecimal = () => {
 
 const continuousOperations = () => {
        // Deals with operating normally, when the first variable has a decimal but no following digits, and allows for operations to continue if Enter key is pressed with only the first variable. Also sort of deals with large number inputs.
-       if (event.key == 'Enter' && numToOperate1 && numToOperate1.length >=16) {
+       if (input == 'Enter' && numToOperate1 && numToOperate1.length >=16) {
         numToOperate1 = parseFloat(numToOperate1, 10).toExponential();
         bottomDisplay.textContent = numToOperate1;
-    } else if (event.key == 'Enter' && numToOperate2 && numToOperate2.length >=16) {
+    } else if (input == 'Enter' && numToOperate2 && numToOperate2.length >=16) {
         numToOperate1 = numToOperate1;
         numToOperate2 = numToOperate2;
         operate(numToOperate1, operatorToOperate, numToOperate2);
         bottomDisplay.textContent = numToOperate1.toExponential();  
-    } else if (event.key == 'Enter' && numToOperate2) {
+    } else if (input == 'Enter' && numToOperate2) {
         numToOperate1 = numToOperate1;
         operate(numToOperate1, operatorToOperate, numToOperate2);  
-    } else if (event.key == 'Enter' && /^[0-9]*\.(?![0-9])$/.test(numToOperate1)) {
+    } else if (input == 'Enter' && /^[0-9]*\.(?![0-9])$/.test(numToOperate1)) {
        numToOperate1 = Math.trunc(numToOperate1);
        bottomDisplay.textContent = numToOperate1; 
-    } else if (event.key == 'Enter' && numToOperate1 && numToOperate1.length <16) {
+    } else if (input == 'Enter' && numToOperate1 && numToOperate1.length <16) {
         numToOperate1 = parseFloat(numToOperate1, 10);
         bottomDisplay.textContent = numToOperate1;
     } 
@@ -160,7 +178,7 @@ const operate = (num1, operator, num2) => {
     if (operator == '/') {
         bottomDisplay.textContent = divide(num1, num2);
     }
-    if (event.key == 'Enter') {
+    if (input == 'Enter') {
         operatorToOperate = '';
         numToOperate2 = '';  
     }
