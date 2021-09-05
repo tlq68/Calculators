@@ -1,3 +1,5 @@
+(function() {
+
 const topDisplay = document.querySelector('#top-number');
 const bottomDisplay = document.querySelector('#bottom-number');
 
@@ -8,40 +10,38 @@ let numToOperate2 = '';
 let outputNum = '';
 
 
-// Start of main function section //
+// Start of listeners //
 
-const keyListenerFunction = () => {
-    document.addEventListener('keydown', function(event) {
-        doOperations();
-        numberInputs();
-        makeDecimal();
-        continuousOperations();
 
-        if ( event.key == 'Shift') {
-            makeNegative();
-        }
+document.addEventListener('keydown', function(event) {
+    doOperations();
+    numberInputs();
+    makeDecimal();
+    continuousOperations();
 
-        if (event.key == 'Escape') {
-           clearAll();
-        }
+    if ( event.key == 'Shift') {
+        makeNegative();
+    }
 
-        if (event.key == 'Backspace') {
-           backspace();
-        }
-    
-        if (bottomDisplay.textContent.length >= 16) {
-            bottomDisplay.style.fontSize = '.7em';
-        }  
-    });
-}
+    if (event.key == 'Escape') {
+        clearAll();
+    }
 
-keyListenerFunction(); 
+    if (event.key == 'Backspace') {
+        backspace();
+    }
+
+    if (bottomDisplay.textContent.length >= 16) {
+        bottomDisplay.style.fontSize = '.7em';
+    }  
+});
+
 
 // ----- //
 
 const inputButtons = document.querySelectorAll('button');
 
-const clickListenerFunction = () => {
+
     inputButtons.forEach(button => {
         button.addEventListener('click', () => {
             button.style.color = 'red';
@@ -52,11 +52,9 @@ const clickListenerFunction = () => {
             }
         });
     }); 
-}
 
-clickListenerFunction();
 
-// End of main function section //
+// End of listeners //
 
 // Start of helper functions
 
@@ -248,3 +246,5 @@ const backspace = () => {
 
 // End of helper functions //
 
+
+  }());
