@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(235deg, blue, white);
+    background-image: linear-gradient(-15deg, blue, white);
     width: 100vw;
     height: 100vh;
 }
@@ -79,24 +79,24 @@ button.touchpad-button {
 }
 
 .eraser {
-    background-color: orange;
+    background-color: rgb(241, 159, 7);
 }
 
 .operator {
-    background-color: rgb(11, 168, 11);
+    background-color: rgb(182, 8, 173);
 }
 
 .number {
-    background-color: purple;
+    background-color: rgb(67, 67, 231);
 }
 
 #decimal-button {
-    background-color: black;
+    background-color: rgba(24, 21, 21, 0.966);
     color: white;
 }
 
 #equals-button {
-    background-color: darkgrey;
+    background-color: rgb(17, 168, 11);
 }
 
 .bottom-row {

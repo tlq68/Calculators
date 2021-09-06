@@ -2,6 +2,7 @@
 
 const topDisplay = document.querySelector('#top-number');
 const bottomDisplay = document.querySelector('#bottom-number');
+const inputButtons = document.querySelectorAll('button');
 
 let numToOperate1 = '';
 let operatorToOperate = '';
@@ -15,14 +16,18 @@ let input = '';
 
 
 document.addEventListener('keydown', function(event) {
-
+    
     input = event.key;
     doOperations();
     numberInputs();
     makeDecimal();
     continuousOperations();
 
-    
+    inputButtons.forEach(button => {
+        if (event.key == button.value) {
+            button.style.color = 'white'
+        }
+    })
 
     if (input == 'Shift') {
         makeNegative();
@@ -30,6 +35,14 @@ document.addEventListener('keydown', function(event) {
 
     if (input == 'Escape') {
         clearAll();
+        inputButtons.forEach(button => {
+            if (button.value != '.') {
+             button.style.color = 'black'     
+            }
+           
+        })
+
+       
     }
 
     if (input == 'Backspace') {
@@ -44,28 +57,32 @@ document.addEventListener('keydown', function(event) {
 
 // ----- //
 
-const inputButtons = document.querySelectorAll('button');
+
 
 inputButtons.forEach(button => {
     button.addEventListener('click', () => {
-        button.style.color = 'red';
-
+        button.style.color = 'white'
 
         input = button.value;
-
         doOperations();
-    numberInputs();
-    makeDecimal();
-    continuousOperations();
+        numberInputs();
+        makeDecimal();
+        continuousOperations();
 
-        if (input == 'Negative') {
+        if (input == 'Shift') {
             makeNegative();
         }
 
-        if (input == 'AllClear') {
+        if (input == 'Escape') {
             clearAll();
+            inputButtons.forEach(button => {
+                if (button.value != '.') {
+                 button.style.color = 'black'     
+                }
+               
+            })
         }
-        if (input == 'Clear') {
+        if (input == 'Backspace') {
             backspace();
         }
     });
