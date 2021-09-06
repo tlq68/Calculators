@@ -50,7 +50,7 @@ h1 {
 
 #output-top {
     font-size: 1em;
-    
+    min-height: 41px;
 }
 #output-bottom {
     font-size: 2em;
@@ -127,3 +127,10 @@ button.touchpad-button {
 #equals-button {
     width: 120px;
 }
+
+
+button:hover {
+    transform: translateY(-5px);
+}
+
+

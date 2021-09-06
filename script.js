@@ -16,7 +16,6 @@ let input = '';
 
 
 document.addEventListener('keydown', function(event) {
-    
     input = event.key;
     doOperations();
     numberInputs();
@@ -39,8 +38,7 @@ document.addEventListener('keydown', function(event) {
             if (button.value != '.') {
              button.style.color = 'black'     
             }
-           
-        })
+        });
 
        
     }
@@ -78,10 +76,10 @@ inputButtons.forEach(button => {
             inputButtons.forEach(button => {
                 if (button.value != '.') {
                  button.style.color = 'black'     
-                }
-               
-            })
+                }   
+            });
         }
+
         if (input == 'Backspace') {
             backspace();
         }
@@ -179,6 +177,8 @@ const continuousOperations = () => {
     if (typeof numToOperate1 == 'number' && (operatorToOperate || numToOperate2)) {
        numToOperate1 = numToOperate1.toString();
     }
+
+   
     
 }
 
@@ -245,7 +245,9 @@ const makeNegative = () => {
     } else if (numToOperate2) {
         numToOperate2 = numToOperate2 * -1;
         topDisplay.textContent = `${numToOperate1} ${operatorToOperate} ${numToOperate2}`
-    } 
+    } else {
+        return;
+    }
     
 }
 
@@ -283,3 +285,4 @@ const backspace = () => {
 
 
   }());
+
