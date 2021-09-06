@@ -125,7 +125,7 @@ const makeDecimal = () => {
         displayOutputNum();
     }
 
-    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (nput == '.' || input == ',')) {
+    if (!numToOperate1 && !operatorToOperate && !numToOperate2 && (input == '.' || input == ',')) {
         numToOperate1 = '0.';
         displayOutputNum();
     } else if (numToOperate1 && operatorToOperate && !numToOperate2 && (input == '.' || input == ',')) {
